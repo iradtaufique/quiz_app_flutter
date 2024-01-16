@@ -1,8 +1,11 @@
 import 'question.dart';
 
 class QuizBrain {
+  // variable that keep track of the question number we are on.
+  int _questionNumber = 0;
+
   // create a list of questions and answer in the same list using class constructor
-  List<Question> questionBank = [
+  List<Question> _questionBank = [
     Question(q: 'Some cats are actually allergic to humans', a: true),
     Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
     Question(
@@ -31,4 +34,22 @@ class QuizBrain {
         q: 'In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.',
         a: true),
   ];
+
+  // create method that will get question number or question index
+  String getQuestionText() {
+    return _questionBank[_questionNumber].questionText;
+  }
+
+  // create a method that will get question answer
+  bool getQuestionAnswer() {
+    return _questionBank[_questionNumber].questionAnswer;
+  }
+
+  // create a method that check if it is safe to load the next question
+
+  void nextQuestion() {
+    if (_questionNumber < _questionBank.length - 1) {
+      _questionNumber++;
+    }
+  }
 }

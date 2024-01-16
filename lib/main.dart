@@ -30,9 +30,6 @@ class _QuizPageState extends State<QuizPage> {
   // list that keep track of user scores in terms of icons
   List<Icon> scoreKeeper = [];
 
-  // variable that keep track of the question number we are on.
-  int questionNumber = 0;
-
   // create an abject that contain questions and answers
   QuizBrain quizBrain = QuizBrain();
 
@@ -48,8 +45,8 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                // quizBrain is an object of QuizBrain class that contain questionBank which a list of questions
-                quizBrain.questionBank[questionNumber].questionText,
+                //quizBrain.questionBank[questionNumber].questionText,
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -75,14 +72,15 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //The user picked true.
                 bool correctAnswer =
-                    quizBrain.questionBank[questionNumber].questionAnswer;
+                    //quizBrain.questionBank[questionNumber].questionAnswer;
+                    quizBrain.getQuestionAnswer();
                 if (correctAnswer == true) {
                   print('user got it right');
                 } else {
                   print('user got it wrong');
                 }
                 setState(() {
-                  questionNumber++;
+                  quizBrain.nextQuestion();
                 });
               },
             ),
@@ -104,21 +102,22 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //The user picked false.
                 bool correctAnswer =
-                    quizBrain.questionBank[questionNumber].questionAnswer;
+                    //quizBrain.questionBank[questionNumber].questionAnswer;
+                    quizBrain.getQuestionAnswer();
                 if (correctAnswer == false) {
                   print('user got it right');
                 } else {
                   print('user got it wrong');
                 }
                 setState(() {
-                  questionNumber++;
+                  quizBrain.nextQuestion();
                 });
               },
             ),
           ),
         ),
-        //TODO: Add a Row here as your score keeper
         Row(
+          // ScoreKeeper is a list that store the scores
           children: scoreKeeper,
         )
       ],
