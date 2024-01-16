@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'package:quiz_app_flutter/quiz_brain.dart';
 
 void main() => runApp(Quizzler());
 
@@ -34,14 +33,8 @@ class _QuizPageState extends State<QuizPage> {
   // variable that keep track of the question number we are on.
   int questionNumber = 0;
 
-  // create a list of questions and answer in the same list using class constructor
-  List<Question> questionBank = [
-    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
-    Question(
-        q: 'Approximately one quarter of human bones are in the feet.',
-        a: true),
-    Question(q: 'A slug\'s blood is green.', a: true),
-  ];
+  // create an abject that contain questions and answers
+  QuizBrain quizBrain = QuizBrain();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +48,8 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionBank[questionNumber].questionText,
+                // quizBrain is an object of QuizBrain class that contain questionBank which a list of questions
+                quizBrain.questionBank[questionNumber].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -81,7 +75,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //The user picked true.
                 bool correctAnswer =
-                    questionBank[questionNumber].questionAnswer;
+                    quizBrain.questionBank[questionNumber].questionAnswer;
                 if (correctAnswer == true) {
                   print('user got it right');
                 } else {
@@ -110,7 +104,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //The user picked false.
                 bool correctAnswer =
-                    questionBank[questionNumber].questionAnswer;
+                    quizBrain.questionBank[questionNumber].questionAnswer;
                 if (correctAnswer == false) {
                   print('user got it right');
                 } else {
