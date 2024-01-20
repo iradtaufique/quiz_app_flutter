@@ -30,7 +30,27 @@ class _QuizPageState extends State<QuizPage> {
   // list that keep track of user scores in terms of icons
   List<Icon> scoreKeeper = [];
 
-  // create an abject that contain questions and answers
+  // create a method that will check users answers
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctAnswer = quizBrain.getQuestionAnswer();
+    setState(() {
+      if (correctAnswer == userPickedAnswer) {
+        scoreKeeper.add(Icon(
+          Icons.check_circle,
+          color: Colors.green,
+        ));
+      } else {
+        scoreKeeper.add(Icon(
+          Icons.close,
+          color: Colors.red,
+        ));
+      }
+
+      quizBrain.nextQuestion();
+    });
+  }
+
+  // create an abject quizBrain that contain questions and answers
   QuizBrain quizBrain = QuizBrain();
 
   @override
@@ -45,7 +65,8 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                //quizBrain.questionBank[questionNumber].questionText,
+                //quizBrain is the object
+                //getQuestionText method is the method used to get every question
                 quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -71,17 +92,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked true.
-                bool correctAnswer =
-                    //quizBrain.questionBank[questionNumber].questionAnswer;
-                    quizBrain.getQuestionAnswer();
-                if (correctAnswer == true) {
-                  print('user got it right');
-                } else {
-                  print('user got it wrong');
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAnswer(true);
               },
             ),
           ),
@@ -100,18 +111,8 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked false.
-                bool correctAnswer =
-                    //quizBrain.questionBank[questionNumber].questionAnswer;
-                    quizBrain.getQuestionAnswer();
-                if (correctAnswer == false) {
-                  print('user got it right');
-                } else {
-                  print('user got it wrong');
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                // check answer, this is for the wrong answer
+                checkAnswer(false);
               },
             ),
           ),
